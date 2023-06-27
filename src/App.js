@@ -1,17 +1,27 @@
 import "./App.css";
-import H1Comp from "./components/h1tag/H1Tag";
-import ClassComp from "./components/classComp/ClassComp";
-import { Button } from "./components/button/Button";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import UserComp from "./components/usercomp/UserComp";
 
 function App() {
-  let fName = "Avinash";
-  return (
-    <div className="App">
-      {/* <H1Comp /> */}
-      {/* <ClassComp /> */}
-      <Button fullName={fName} />
-    </div>
-  );
+  const [users, setUsers] = useState([]);
+
+  const getUsers = async () => {
+    const { data } = await axios.get(
+      "https://jsonplaceholder.typicode.com/users"
+    );
+    setUsers(data);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const displayUsers = users.map((user) => (
+    <UserComp key={user.id} userData={user} />
+  ));
+
+  return <div className="App">{displayUsers}</div>;
 }
 
 export default App;
