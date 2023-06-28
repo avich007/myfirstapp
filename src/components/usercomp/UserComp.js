@@ -11,7 +11,7 @@ const UserComp = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div className="usercontainer">
+    <div className="usercompcontainer">
       <Avatar sx={{ bgcolor: "orange" }}>{username.charAt(0)}</Avatar>
       <div style={{ textAlign: "center" }}>
         <h3>{username}</h3>
