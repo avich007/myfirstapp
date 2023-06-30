@@ -15,8 +15,6 @@ const UserModal = (props) => {
     p: 4,
   };
 
-  console.log("reached", children);
-
   return (
     <Modal
       open={isOpen}

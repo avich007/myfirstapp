@@ -1,9 +1,9 @@
 import "./App.css";
 import React from "react";
-import User from "./container/user/User";
+import Todo from "./container/todo/Todo";
 
 function App() {
-  return <User />;
+  return <Todo />;
 }
 
 export default App;
