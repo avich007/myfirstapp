@@ -1,10 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import StyledForm from "../../syledComponents/StyledForm";
+import TodoContext from "../../store/todo-context";
 
-const Form = (props) => {
+const Form = () => {
   const inputRef = useRef();
   const [isValid, setIsValid] = useState(true);
-  const { setTodoData } = props;
+
+  const todoCtx = useContext(TodoContext);
 
   const handleChange = () => {
     inputRef.current.value.trim().length !== 0 && setIsValid(true);
@@ -13,10 +15,12 @@ const Form = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputRef.current.value.trim().length !== 0) {
-      setTodoData((prevState) => {
+      const todoItem = inputRef.current.value;
+      todoCtx.setTodoData((prevState) => {
+        const lastItem = prevState.findLast((item) => item);
         return [
           ...prevState,
-          { id: prevState.length + 1, value: inputRef.current.value },
+          { id: lastItem ? lastItem.id + 1 : 1, value: todoItem },
         ];
       });
     } else {

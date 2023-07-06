@@ -1,20 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyledTodoDiv, StyledStack } from "../../syledComponents/StyledTodo";
 import { Chip } from "@mui/material";
+import TodoContext from "../../store/todo-context";
 
-const TodoList = (props) => {
-  const { todoData, setTodoData } = props;
+const TodoList = () => {
+  const todoCtx = useContext(TodoContext);
 
   const handleDelete = (id) => {
-    const index = todoData.findIndex((todo) => todo?.id === id);
-    setTodoData((prevState) => {
-      const newTodo = { ...prevState };
-      delete newTodo[index];
-      return newTodo;
-    });
+    todoCtx.setTodoData((prevState) =>
+      prevState.filter((item) => item.id !== id)
+    );
   };
 
-  const todoListItems = todoData?.map((item) => (
+  const todoListItems = todoCtx.todoData?.map((item) => (
     <StyledStack key={item.id} direction="row" spacing={1}>
       <Chip
         label={item.value}
@@ -27,7 +25,7 @@ const TodoList = (props) => {
 
   return (
     <StyledTodoDiv>
-      <label>Pending Tasks:</label>
+      <label>Pending Tasks ({todoCtx.todoData.length})</label>
       {todoListItems}
     </StyledTodoDiv>
   );
